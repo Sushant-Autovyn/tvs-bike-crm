@@ -1,0 +1,93 @@
+<div class="bike-page">
+  <div class="page-header">
+    <h1>Bike Catalog</h1>
+    <p>Manage your showroom bike models</p>
+  </div>
+
+  <div class="card form-card">
+    <h3>Add Bike</h3>
+
+    <div class="form-grid">
+      <input [(ngModel)]="brand" placeholder="Brand" />
+      <input [(ngModel)]="modelName" placeholder="Model Name" />
+      <input [(ngModel)]="category" placeholder="Category" />
+      <input [(ngModel)]="price" type="number" placeholder="Price" />
+      <input [(ngModel)]="color" placeholder="Color" />
+      <input [(ngModel)]="stock" type="number" placeholder="Stock" />
+    </div>
+
+    <button class="primary-btn" (click)="addBike()">Add Bike</button>
+  </div>
+
+  <div class="card">
+    <div class="table-header">
+      <h3>Bike List</h3>
+      <input 
+        [(ngModel)]="search" 
+        placeholder="Search bikes..."
+        (input)="filterBikes()"
+      />
+    </div>
+
+    @if (isLoading) {
+      <div class="loading">Loading bikes...</div>
+    }
+
+    @if (errorMsg) {
+      <div class="error">{{ errorMsg }}</div>
+    }
+
+    @if (!isLoading && filteredBikes.length > 0) {
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Category</th>
+              <th>Color</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (bike of filteredBikes; track bike._id) {
+              <tr class="table-row">
+                <td class="brand-cell">
+                  <strong>{{ bike.brand }}</strong>
+                </td>
+                <td class="model-cell">{{ bike.modelName }}</td>
+                <td class="category-cell">
+                  <span class="category-badge">{{ bike.category }}</span>
+                </td>
+                <td class="color-cell">
+                  <span class="color-indicator">{{ bike.color }}</span>
+                </td>
+                <td class="price-cell">
+                  <span class="price-tag">₹{{ bike.price | number }}</span>
+                </td>
+                <td class="stock-cell">
+                  <span class="stock-badge" [class.low-stock]="bike.stock < 5">
+                    {{ bike.stock }} units
+                  </span>
+                </td>
+                <td class="actions-cell">
+                  <button class="action-btn delete-btn" (click)="deleteBike(bike._id)" title="Delete Bike">
+                    🗑️ Delete
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+    
+    @if (!isLoading && filteredBikes.length === 0) {
+      <div class="no-data">
+        <p>No bikes found</p>
+      </div>
+    }
+  </div>
+</div>

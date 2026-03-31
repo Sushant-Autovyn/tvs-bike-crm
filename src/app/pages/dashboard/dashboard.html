@@ -1,0 +1,143 @@
+<section class="dashboard-page">
+  <div class="page-header">
+    <div class="greeting-section">
+      <h1>{{ greeting }}, <span class="user-name">{{ userName }}</span></h1>
+      <p>Here's what's happening at your showroom today.</p>
+    </div>
+    
+    <div class="header-badge">
+      <span>Bike CRM Overview</span>
+      <!-- Debug button for chart testing -->
+      <button 
+        (click)="debugCharts()" 
+        style="margin-left: 10px; padding: 5px 10px; background: #22c55e; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+        Debug Charts
+      </button>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-box">Loading dashboard data...</div>
+  } @else if (errorMsg) {
+    <div class="error-box">{{ errorMsg }}</div>
+  } @else {
+    <div class="stats-grid">
+      @for (item of stats; track item.title) {
+        <div class="stat-card">
+          <div class="card-top">
+            <div class="card-icon">{{ item.icon }}</div>
+            <span class="change" [class.down]="item.change.includes('-')">
+              {{ item.change }}
+            </span>
+          </div>
+
+          <h2>{{ item.value }}</h2>
+          <p>{{ item.title }}</p>
+        </div>
+      }
+    </div>
+    <br>
+    <br>
+
+    <!-- Main Charts Grid -->
+    <div class="charts-grid">
+      <!-- Revenue Overview Chart -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h3>REVENUE OVERVIEW</h3>
+            <p>Monthly revenue & business metrics</p>
+          </div>
+        </div>
+        <div class="chart-box">
+          <canvas id="revenueChart" #revenueChart></canvas>
+        </div>
+      </div>
+
+      <!-- Customer Analytics Chart -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h3>CUSTOMER ANALYTICS</h3>
+            <p>Customer types & demographics</p>
+          </div>
+        </div>
+        <div class="chart-box">
+          <canvas id="customerChart" #customerChart></canvas>
+        </div>
+      </div>
+
+      <!-- Sales Trend Chart -->
+      <div class="chart-card chart-card-wide">
+        <div class="card-header">
+          <div>
+            <h3>SALES TREND</h3>
+            <p>6-month sales performance</p>
+          </div>
+        </div>
+        <div class="chart-box">
+          <canvas id="salesTrendChart" #salesTrendChart></canvas>
+        </div>
+      </div>
+
+      <!-- Service Performance Chart -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h3>SERVICE METRICS</h3>
+            <p>Service bookings & completion</p>
+          </div>
+        </div>
+        <div class="chart-box">
+          <canvas id="serviceChart" #serviceChart></canvas>
+        </div>
+      </div>
+
+      <!-- Bike Models Performance -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h3>TOP BIKE MODELS</h3>
+            <p>Best selling models</p>
+          </div>
+        </div>
+        <div class="chart-box">
+          <canvas id="modelsChart" #modelsChart></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Section -->
+    <div class="activity-section">
+      <div class="activity-card">
+        <div class="card-header">
+          <div>
+            <h3>RECENT ACTIVITY</h3>
+            <p>Latest showroom updates</p>
+          </div>
+        </div>
+
+        <div class="activity-list">
+          @for (activity of recentActivities; track activity.title + activity.time) {
+            <div class="activity-item">
+              <span class="activity-icon">
+                @if (activity.type === 'sale') {
+                  🛒
+                } @else if (activity.type === 'service') {
+                  🔧
+                } @else {
+                  👤
+                }
+              </span>
+
+              <div class="activity-content">
+                <h4>{{ activity.title }}</h4>
+                <p>{{ activity.time }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</section>

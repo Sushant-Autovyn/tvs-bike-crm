@@ -1,0 +1,73 @@
+<div class="suppliers-page">
+  <div class="page-header">
+    <h1>Suppliers</h1>
+    <p>Manage suppliers and vendor details</p>
+  </div>
+
+  <div class="card form-card">
+    <h3>Add Supplier</h3>
+
+    <div class="form-grid">
+      <input [(ngModel)]="name" placeholder="Contact Person Name" />
+      <input [(ngModel)]="companyName" placeholder="Company Name" />
+      <input [(ngModel)]="phone" placeholder="Phone" />
+      <input [(ngModel)]="email" placeholder="Email" />
+      <input [(ngModel)]="address" placeholder="Address" />
+      <input [(ngModel)]="suppliedBrands" placeholder="Supplied Brands (comma separated)" />
+    </div>
+
+    <button class="primary-btn" (click)="createSupplier()">Add Supplier</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="card">Loading suppliers...</div>
+  }
+
+  @if (errorMsg) {
+    <div class="card error">{{ errorMsg }}</div>
+  }
+
+  @if (!isLoading && suppliers.length > 0) {
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Contact Name</th>
+            <th>Company</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Brands</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (supplier of suppliers; track supplier._id) {
+            <tr>
+              <td>{{ supplier.name }}</td>
+              <td>{{ supplier.companyName }}</td>
+              <td>{{ supplier.phone }}</td>
+              <td>{{ supplier.email || '-' }}</td>
+              <td>{{ supplier.address || '-' }}</td>
+              <td>
+                @if (supplier.suppliedBrands?.length) {
+                  {{ supplier.suppliedBrands.join(', ') }}
+                } @else {
+                  -
+                }
+              </td>
+              <td>
+                <button class="delete-btn" (click)="deleteSupplier(supplier._id)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!isLoading && suppliers.length === 0) {
+    <div class="card">No suppliers found</div>
+  }
+</div>

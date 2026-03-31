@@ -1,0 +1,60 @@
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
+
+dotenv.config();
+
+const app = express();
+
+connectDB();
+
+// Enhanced CORS configuration
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://your-production-domain.com'] // Update this for production
+    : ['http://localhost:4200', 'http://localhost:3000'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Basic security headers
+app.use((req, res, next) => {
+  res.header('X-Content-Type-Options', 'nosniff');
+  res.header('X-Frame-Options', 'DENY');
+  res.header('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
+app.get('/', (req, res) => {
+  res.send('Bike CRM API is running');
+});
+
+// Simple test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working', timestamp: new Date() });
+});
+
+app.use('/api/auth', require('./routes/authroutes'));
+app.use('/api/dashboard', require('./routes/dashboardroutes'));
+app.use('/api/customers', require('./routes/customerroutes'));
+app.use('/api/bikes', require('./routes/bikeroutes'));
+app.use('/api/sales', require('./routes/salesroutes'));
+app.use('/api/services', require('./routes/serviceroutes'));
+app.use('/api/notifications', require('./routes/notificationroutes'));
+app.use('/api/quotations', require('./routes/quotationroutes'));
+app.use('/api/inventory', require('./routes/inventoryroutes'));
+app.use('/api/leads', require('./routes/leadroutes'));
+app.use('/api/payments', require('./routes/paymentroutes'));
+app.use('/api/staff', require('./routes/staffroutes'));
+app.use('/api/suppliers', require('./routes/supplierroutes'));
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

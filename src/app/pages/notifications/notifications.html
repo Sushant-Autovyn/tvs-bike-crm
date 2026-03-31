@@ -1,0 +1,14 @@
+<div class="notifications-page">
+  <h1>Notifications</h1>
+
+  @for (n of notifications; track n._id) {
+    <div class="notification-item" [class.read]="n.isRead">
+      <h4>{{ n.title }}</h4>
+      <p>{{ n.message }}</p>
+
+      @if (!n.isRead) {
+        <button (click)="markRead(n._id)">Mark as read</button>
+      }
+    </div>
+  }
+</div>

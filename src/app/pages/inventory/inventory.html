@@ -1,0 +1,75 @@
+<div class="inventory-page">
+  <h1>Inventory Management</h1>
+
+  <!-- Authentication Status Panel -->
+  <div class="card debug-card" style="background-color: #f8f9fa; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h4 style="color: #856404; margin: 0;">📦 Inventory Management Authentication</h4>
+      <button style="padding: 5px 10px; font-size: 12px; background: #ffc107; color: #856404; border: none; border-radius: 4px; cursor: pointer;" (click)="checkAuthStatus()">Refresh</button>
+    </div>
+    <div style="font-size: 14px; line-height: 1.5;">
+      <div><strong>Logged In:</strong> {{ debugInfo.isLoggedIn ? '✅ Yes' : '❌ No' }}</div>
+      <div><strong>Has Token:</strong> {{ debugInfo.hasToken ? '✅ Yes' : '❌ No' }}</div>
+      <div><strong>User Role:</strong> {{ debugInfo.userRole || 'No role' }}</div>
+      <div><strong>Token Preview:</strong> {{ debugInfo.tokenPreview }}</div>
+      @if (!debugInfo.isLoggedIn) {
+        <div style="color: #856404; margin-top: 10px; padding: 15px; background-color: #fff3cd; border-radius: 4px;">
+          <strong>⚠️ Authentication Required</strong>
+          <p style="margin: 5px 0;">You need to login to manage inventory.</p>
+          <div style="background-color: #f0f8ff; padding: 10px; border-radius: 4px; margin: 10px 0;">
+            <strong>📋 Test Login Credentials:</strong><br>
+            Email: <code>admin@test.com</code><br>
+            Password: <code>admin123</code>
+          </div>
+          <button style="padding: 8px 16px; background: #ffc107; color: #856404; border: none; border-radius: 4px; cursor: pointer;" (click)="goToLogin()">
+            Login Now
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <p>Loading...</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Bike</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Min Stock</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (bike of inventory; track bike._id) {
+          <tr [class.low]="isLowStock(bike)">
+            <td>{{ bike.brand }} {{ bike.modelName }}</td>
+            <td>₹{{ bike.price }}</td>
+
+            <td>
+              <input type="number" [(ngModel)]="bike.stock" />
+            </td>
+
+            <td>{{ bike.minimumStock }}</td>
+
+            <td>
+              @if (isLowStock(bike)) {
+                <span class="low-stock">Low</span>
+              } @else {
+                <span class="good-stock">Good</span>
+              }
+            </td>
+
+            <td>
+              <button (click)="updateStock(bike)">Update</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

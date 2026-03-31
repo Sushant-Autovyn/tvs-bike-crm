@@ -1,0 +1,68 @@
+<div class="service-page">
+  <h1>Service Management</h1>
+
+  <!-- Authentication Status Panel -->
+  <div class="card debug-card" style="background-color: #f8f9fa; border-left: 4px solid #dc3545; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h4 style="color: #dc3545; margin: 0;">🔧 Service Management Authentication</h4>
+      <button style="padding: 5px 10px; font-size: 12px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;" (click)="checkAuthStatus()">Refresh</button>
+    </div>
+    <div style="font-size: 14px; line-height: 1.5;">
+      <div><strong>Logged In:</strong> {{ debugInfo.isLoggedIn ? '✅ Yes' : '❌ No' }}</div>
+      <div><strong>Has Token:</strong> {{ debugInfo.hasToken ? '✅ Yes' : '❌ No' }}</div>
+      <div><strong>User Role:</strong> {{ debugInfo.userRole || 'No role' }}</div>
+      <div><strong>Token Preview:</strong> {{ debugInfo.tokenPreview }}</div>
+      @if (!debugInfo.isLoggedIn) {
+        <div style="color: red; margin-top: 10px; padding: 15px; background-color: #ffe6e6; border-radius: 4px;">
+          <strong>⚠️ Authentication Required</strong>
+          <p style="margin: 5px 0;">You need to login to manage service bookings.</p>
+          <div style="background-color: #f0f8ff; padding: 10px; border-radius: 4px; margin: 10px 0;">
+            <strong>📋 Test Login Credentials:</strong><br>
+            Email: <code>admin@test.com</code><br>
+            Password: <code>admin123</code>
+          </div>
+          <button style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;" (click)="goToLogin()">
+            Login Now
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Create Service</h3>
+
+    <select [(ngModel)]="customerId">
+      <option value="">Select Customer</option>
+      @for (c of customers; track c._id) {
+        <option [value]="c._id">{{ c.name }}</option>
+      }
+    </select>
+
+    <select [(ngModel)]="bikeId">
+      <option value="">Select Bike</option>
+      @for (b of bikes; track b._id) {
+        <option [value]="b._id">{{ b.brand }} {{ b.modelName }}</option>
+      }
+    </select>
+
+    <input [(ngModel)]="issue" placeholder="Issue description" />
+
+    <button (click)="createService()">Create</button>
+  </div>
+
+  <div class="card">
+    <h3>Service List</h3>
+
+    @for (s of services; track s._id) {
+      <div class="service-item">
+        <p>{{ s.customerId?.name }} - {{ s.bikeId?.modelName }}</p>
+        <p>{{ s.issue }}</p>
+        <p>Status: {{ s.status }}</p>
+
+        <button (click)="updateStatus(s._id, 'in-progress')">Start</button>
+        <button (click)="updateStatus(s._id, 'completed')">Complete</button>
+      </div>
+    }
+  </div>
+</div>

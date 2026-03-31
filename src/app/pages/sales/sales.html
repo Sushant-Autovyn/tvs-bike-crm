@@ -1,0 +1,80 @@
+<div class="sales-page">
+  <div class="page-header">
+    <h1>Sales</h1>
+    <p>Create and manage bike sales</p>
+  </div>
+
+  <div class="card form-card">
+    <h3>Create Sale</h3>
+
+    <div class="form-grid">
+      <select [(ngModel)]="customerId">
+        <option value="">Select Customer</option>
+        @for (customer of customers; track customer._id) {
+          <option [value]="customer._id">
+            {{ customer.name }} - {{ customer.phone }}
+          </option>
+        }
+      </select>
+
+      <select [(ngModel)]="bikeId">
+        <option value="">Select Bike</option>
+        @for (bike of bikes; track bike._id) {
+          <option [value]="bike._id">
+            {{ bike.brand }} {{ bike.modelName }} (Stock: {{ bike.stock }})
+          </option>
+        }
+      </select>
+
+      <input [(ngModel)]="quantity" type="number" min="1" placeholder="Quantity" />
+    </div>
+
+    <div class="total-box">
+      <strong>Total Amount: ₹{{ totalAmount }}</strong>
+    </div>
+
+    <button class="primary-btn" (click)="createSale()">Create Sale</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="card">Loading sales...</div>
+  }
+
+  @if (errorMsg) {
+    <div class="card error">{{ errorMsg }}</div>
+  }
+
+  @if (!isLoading && sales.length > 0) {
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Bike</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Sold By</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (sale of sales; track sale._id) {
+            <tr>
+              <td>{{ sale.customerId?.name }}</td>
+              <td>{{ sale.bikeId?.brand }} {{ sale.bikeId?.modelName }}</td>
+              <td>{{ sale.quantity }}</td>
+              <td>₹{{ sale.price }}</td>
+              <td>₹{{ sale.totalAmount }}</td>
+              <td>{{ sale.soldBy?.name }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!isLoading && sales.length === 0) {
+    <div class="card">No sales found</div>
+  }
+</div>

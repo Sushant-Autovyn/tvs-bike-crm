@@ -1,0 +1,81 @@
+<div class="login-page">
+  <div class="login-shell">
+    
+    <div class="login-left">
+      <div class="brand-content">
+        <div class="brand-header">
+          <div class="tvs-logo-wrapper">
+             <h2>TVS</h2>
+          </div>
+          <h1 class="crm-title">SERVICE CRM</h1>
+        </div>
+
+        <p class="brand-description">
+          Manage job cards, warranty claims, spare parts inventory, and customer invoices.
+        </p>
+      </div>
+
+      <div class="visual-stack">
+        <div class="glow-effect"></div>
+        <img src="" alt="TVS Bike" class="bike-hero-image" />
+        
+      </div>
+    </div>
+
+    <div class="login-right">
+      <div class="form-container">
+        <header class="form-header">
+          <h2>Welcome Back!</h2>
+          <p>Login to your TVS Service CRM dashboard</p>
+        </header>
+
+        <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <i class="icon-mail">✉</i>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                [(ngModel)]="email"
+                placeholder="sushantv1@gmail.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <i class="icon-lock">🔒</i>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                [(ngModel)]="password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <a href="#" class="forgot-link">Forgot <span>password?</span></a>
+          </div>
+
+          @if (errorMsg) {
+            <p class="error-text">{{ errorMsg }}</p>
+          }
+
+          <button type="submit" class="login-submit" [disabled]="isLoading">
+            {{ isLoading ? 'Logging in...' : 'Login' }}
+          </button>
+        </form>
+
+        <p class="debug-info">Debug: Login component is loaded and visible</p>
+      </div>
+    </div>
+
+  </div>
+</div>

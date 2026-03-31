@@ -1,0 +1,139 @@
+<div class="leads-page">
+  <div class="page-header">
+    <h1>Leads</h1>
+    <p>Manage sales leads and conversions</p>
+  </div>
+
+  <!-- Authentication Status Panel -->
+  <div class="card debug-card" style="background-color: #f8f9fa; border-left: 4px solid #17a2b8; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h4 style="color: #17a2b8; margin: 0;">🎯 Lead Management Authentication</h4>
+      <button style="padding: 5px 10px; font-size: 12px; background: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer;" (click)="checkAuthStatus()">Refresh</button>
+    </div>
+    <div style="font-size: 14px; line-height: 1.5;">
+      <div><strong>Logged In:</strong> {{ debugInfo.isLoggedIn ? '✅ Yes' : '❌ No' }}</div>
+      <div><strong>Has Token:</strong> {{ debugInfo.hasToken ? '✅ Yes' : '❌ No' }}</div>
+      <div><strong>User Role:</strong> {{ debugInfo.userRole || 'No role' }}</div>
+      <div><strong>Token Preview:</strong> {{ debugInfo.tokenPreview }}</div>
+      @if (!debugInfo.isLoggedIn) {
+        <div style="color: red; margin-top: 10px; padding: 15px; background-color: #ffe6e6; border-radius: 4px;">
+          <strong>⚠️ Authentication Required</strong>
+          <p style="margin: 5px 0;">You need to login to manage leads.</p>
+          <div style="background-color: #f0f8ff; padding: 10px; border-radius: 4px; margin: 10px 0;">
+            <strong>📋 Test Login Credentials:</strong><br>
+            Email: <code>admin@test.com</code><br>
+            Password: <code>admin123</code>
+          </div>
+          <button style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;" (click)="goToLogin()">
+            Login Now
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="card form-card">
+    <h3>Add Lead</h3>
+
+    <div class="form-grid">
+      <input [(ngModel)]="name" placeholder="Name" />
+      <input [(ngModel)]="phone" placeholder="Phone" />
+      <input [(ngModel)]="email" placeholder="Email" />
+      <input [(ngModel)]="interestedBike" placeholder="Interested Bike" />
+
+      <select [(ngModel)]="source">
+        <option value="walk-in">Walk-in</option>
+        <option value="call">Call</option>
+        <option value="website">Website</option>
+        <option value="social-media">Social Media</option>
+        <option value="reference">Reference</option>
+      </select>
+
+      <input [(ngModel)]="notes" placeholder="Notes" />
+    </div>
+
+    <button class="primary-btn" (click)="createLead()">Add Lead</button>
+  </div>
+
+  <div class="card">
+    <input
+      class="search-box"
+      [(ngModel)]="search"
+      (input)="filterLeads()"
+      placeholder="Search leads..."
+    />
+  </div>
+
+  @if (isLoading) {
+    <div class="card">Loading leads...</div>
+  }
+
+  @if (errorMsg) {
+    <div class="card error">{{ errorMsg }}</div>
+  }
+
+  @if (!isLoading && filteredLeads.length > 0) {
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Interested Bike</th>
+            <th>Source</th>
+            <th>Status</th>
+            <th>Assigned To</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (lead of filteredLeads; track lead._id) {
+            <tr>
+              <td>{{ lead.name }}</td>
+              <td>{{ lead.phone }}</td>
+              <td>{{ lead.email || '-' }}</td>
+              <td>{{ lead.interestedBike || '-' }}</td>
+              <td>{{ lead.source }}</td>
+              <td>
+                <span class="status-badge"
+                  [class.new]="lead.status === 'new'"
+                  [class.contacted]="lead.status === 'contacted'"
+                  [class.followup]="lead.status === 'follow-up'"
+                  [class.converted]="lead.status === 'converted'"
+                  [class.lost]="lead.status === 'lost'">
+                  {{ lead.status }}
+                </span>
+              </td>
+              <td>{{ lead.assignedTo?.name || '-' }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="contact-btn" (click)="updateStatus(lead._id, 'contacted')">
+                    Contacted
+                  </button>
+                  <button class="follow-btn" (click)="updateStatus(lead._id, 'follow-up')">
+                    Follow-up
+                  </button>
+                  <button class="lost-btn" (click)="updateStatus(lead._id, 'lost')">
+                    Lost
+                  </button>
+
+                  @if (lead.status !== 'converted') {
+                    <button class="convert-btn" (click)="convertToCustomer(lead._id)">
+                      Convert
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!isLoading && filteredLeads.length === 0) {
+    <div class="card">No leads found</div>
+  }
+</div>

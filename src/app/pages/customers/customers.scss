@@ -1,0 +1,94 @@
+.customers-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-header h1 {
+  font-size: 26px;
+  color: #ffffff;
+}
+
+.card {
+  background: #334155;
+  border: 1px solid #475569;
+  border-radius: 16px;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: #ffffff;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #22c55e;
+  }
+}
+
+.primary-btn {
+  margin-top: 10px;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #16a34a;
+    transform: translateY(-1px);
+  }
+}
+
+.delete-btn {
+  background: #7f1d1d;
+  border: none;
+  padding: 6px 10px;
+  color: #f87171;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #991b1b;
+    color: #ffffff;
+  }
+}
+
+.search-box {
+  width: 100%;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}

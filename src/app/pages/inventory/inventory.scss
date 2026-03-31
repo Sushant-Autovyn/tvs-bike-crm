@@ -1,0 +1,39 @@
+.inventory-page {
+  padding: 20px;
+  background: #1e293b;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #334155;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #475569;
+  color: #ffffff;
+}
+
+th {
+  background: #1e293b;
+  font-weight: 600;
+}
+
+.low {
+  background: #7f1d1d;
+}
+
+.low-stock {
+  color: #f87171;
+  font-weight: bold;
+}
+
+.good-stock {
+  color: #10b981;
+}

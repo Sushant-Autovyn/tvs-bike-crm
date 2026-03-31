@@ -1,0 +1,119 @@
+<div class="payments-page">
+  <div class="page-header">
+    <h1>Payments</h1>
+    <p>Track customer payments and billing records</p>
+  </div>
+
+  <div class="card form-card">
+    <h3>Create Payment</h3>
+
+    <div class="form-grid">
+      <select [(ngModel)]="saleId" (change)="autofillAmount()">
+        <option value="">Select Sale ({{ sales.length }} available)</option>
+        @for (sale of sales; track sale._id) {
+          <option [value]="sale._id">
+            {{ sale.customerId?.name }} - ₹{{ sale.totalAmount }}
+          </option>
+        }
+      </select>
+
+      <!-- Debug info -->
+      @if (sales.length === 0) {
+        <div class="debug-info">
+          <p>No sales found. Loading status: {{ isLoading ? 'Loading...' : 'Loaded' }}</p>
+          @if (errorMsg) {
+            <p>Error: {{ errorMsg }}</p>
+          }
+          <div class="debug-buttons">
+            <button class="debug-btn" (click)="testDatabase()">Test Database</button>
+            <button class="debug-btn" (click)="loadSales()">Retry Load Sales</button>
+            <button class="debug-btn clear-tokens" (click)="clearTokensAndRetry()">Clear Tokens & Login</button>
+          </div>
+        </div>
+      }
+
+      <input [(ngModel)]="amount" type="number" placeholder="Amount" />
+
+      <select [(ngModel)]="paymentMethod">
+        <option value="cash">Cash</option>
+        <option value="upi">UPI</option>
+        <option value="card">Card</option>
+        <option value="bank-transfer">Bank Transfer</option>
+      </select>
+
+      <select [(ngModel)]="status">
+        <option value="paid">Paid</option>
+        <option value="pending">Pending</option>
+        <option value="partial">Partial</option>
+      </select>
+
+      <input [(ngModel)]="notes" placeholder="Notes" />
+    </div>
+
+    <button class="primary-btn" (click)="createPayment()">Create Payment</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="card">Loading payments...</div>
+  }
+
+  @if (errorMsg) {
+    <div class="card error">{{ errorMsg }}</div>
+  }
+
+  @if (!isLoading && payments.length > 0) {
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Paid By</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (payment of payments; track payment._id) {
+            <tr>
+              <td>{{ payment.customerId?.name }}</td>
+              <td>₹{{ payment.amount }}</td>
+              <td>{{ payment.paymentMethod }}</td>
+              <td>
+                <span class="status-badge"
+                  [class.paid]="payment.status === 'paid'"
+                  [class.pending]="payment.status === 'pending'"
+                  [class.partial]="payment.status === 'partial'">
+                  {{ payment.status }}
+                </span>
+              </td>
+              <td>{{ payment.paidBy?.name }}</td>
+              <td>{{ payment.createdAt | date:'mediumDate' }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="pdf-btn" 
+                          (click)="generateInvoicePDF(payment)"
+                          title="Download Invoice PDF (Client-side)">
+                    📄 PDF
+                  </button>
+                  <button class="server-pdf-btn" 
+                          (click)="generateServerPDF(payment)"
+                          title="Download Invoice PDF (Server-side)">
+                    🖥️ Server PDF
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!isLoading && payments.length === 0) {
+    <div class="card">No payments found</div>
+  }
+</div>

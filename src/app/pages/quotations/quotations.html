@@ -1,0 +1,99 @@
+<div class="quotations-page">
+  <div class="page-header">
+    <h1>Quotations</h1>
+    <p>Create and manage bike quotations</p>
+  </div>
+
+  <div class="card form-card">
+    <h3>Create Quotation</h3>
+
+    <div class="form-grid">
+      <select [(ngModel)]="customerId">
+        <option value="">Select Customer</option>
+        @for (customer of customers; track customer._id) {
+          <option [value]="customer._id">
+            {{ customer.name }} - {{ customer.phone }}
+          </option>
+        }
+      </select>
+
+      <select [(ngModel)]="bikeId">
+        <option value="">Select Bike</option>
+        @for (bike of bikes; track bike._id) {
+          <option [value]="bike._id">
+            {{ bike.brand }} {{ bike.modelName }} - ₹{{ bike.price }}
+          </option>
+        }
+      </select>
+
+      <input [(ngModel)]="quantity" type="number" min="1" placeholder="Quantity" />
+    </div>
+
+    <div class="total-box">
+      <strong>Total Amount: ₹{{ totalAmount }}</strong>
+    </div>
+
+    <button class="primary-btn" (click)="createQuotation()">Create Quotation</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="card">Loading quotations...</div>
+  }
+
+  @if (errorMsg) {
+    <div class="card error">{{ errorMsg }}</div>
+  }
+
+  @if (!isLoading && quotations.length > 0) {
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Bike</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Created By</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (quotation of quotations; track quotation._id) {
+            <tr>
+              <td>{{ quotation.customerId?.name }}</td>
+              <td>{{ quotation.bikeId?.brand }} {{ quotation.bikeId?.modelName }}</td>
+              <td>{{ quotation.quantity }}</td>
+              <td>₹{{ quotation.price }}</td>
+              <td>₹{{ quotation.totalAmount }}</td>
+              <td>
+                <span class="status-badge" [class.pending]="quotation.status === 'pending'"
+                  [class.approved]="quotation.status === 'approved'"
+                  [class.rejected]="quotation.status === 'rejected'">
+                  {{ quotation.status }}
+                </span>
+              </td>
+              <td>{{ quotation.createdBy?.name }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="approve-btn" (click)="updateStatus(quotation._id, 'approved')">
+                    Approve
+                  </button>
+                  <button class="reject-btn" (click)="updateStatus(quotation._id, 'rejected')">
+                    Reject
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (!isLoading && quotations.length === 0) {
+    <div class="card">No quotations found</div>
+  }
+</div>

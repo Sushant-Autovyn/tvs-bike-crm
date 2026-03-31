@@ -1,0 +1,26 @@
+.notifications-page {
+  background: #1e293b;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-header h1 {
+  font-size: 26px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.notification-item {
+  border: 1px solid #475569;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: #334155;
+  color: #ffffff;
+}
+
+.notification-item.read {
+  opacity: 0.6;
+  background: #1e293b;
+}
