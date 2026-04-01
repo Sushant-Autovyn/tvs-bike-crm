@@ -2,7 +2,7 @@ services:
   - type: web
     name: tvs-bike-crm
     env: static
-    buildCommand: npm install && npm run build:prod
+    buildCommand: npm run build
     staticPublishPath: ./dist/bikecrm/browser
     routes:
       - type: rewrite
