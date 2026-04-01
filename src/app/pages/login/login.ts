@@ -25,6 +25,7 @@ export class Login {
       return;
     }
 
+    console.log('Login attempt started');
     this.errorMsg = '';
     this.isLoading = true;
 
@@ -32,13 +33,18 @@ export class Login {
       email: this.email,
       password: this.password
     }).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('Login successful:', response);
         this.isLoading = false;
         this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {
+        console.error('Login error:', error);
         this.isLoading = false;
         this.errorMsg = error?.error?.message || 'Login failed';
+      },
+      complete: () => {
+        console.log('Login observable completed');
       }
     });
   }

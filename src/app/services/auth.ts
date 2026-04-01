@@ -11,13 +11,22 @@ export class Auth {
   private apiUrl = `${environment.apiUrl}/auth`;
 
   login(data: { email: string; password: string }): Observable<any> {
+    console.log('Environment:', environment);
+    console.log('Production:', environment.production);
+    console.log('DemoMode:', (environment as any).demoMode);
+    
     // Demo mode for deployment - simulate successful login
-    if (environment.production && (environment as any).demoMode) {
-      return this.demoLogin(data).pipe(delay(1000)); // Simulate API delay
+    const isDemoMode = environment.production && (environment as any).demoMode;
+    
+    if (isDemoMode) {
+      console.log('Demo mode enabled - using mock authentication');
+      return this.demoLogin(data);
     }
     
+    console.log('Regular mode - attempting HTTP request to:', this.apiUrl);
     return this.http.post<any>(`${this.apiUrl}/login`, data).pipe(
       tap((response) => {
+        console.log('Auth response:', response);
         if (response?.token) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user || {}));
@@ -27,6 +36,7 @@ export class Auth {
   }
 
   private demoLogin(data: { email: string; password: string }): Observable<any> {
+    console.log('DemoLogin called with:', data);
     // Demo credentials - accept any email/password for demo
     const demoResponse = {
       success: true,
@@ -39,9 +49,13 @@ export class Auth {
       }
     };
     
+    console.log('Demo response:', demoResponse);
+    
     // Store demo data
     localStorage.setItem('token', demoResponse.token);
     localStorage.setItem('user', JSON.stringify(demoResponse.user));
+    
+    console.log('Demo data stored in localStorage');
     
     return of(demoResponse);
   }
