@@ -1,0 +1,12 @@
+src
+*.md
+.git
+.gitignore
+angular.json
+tsconfig*.json
+*.spec.ts
+*.config.js
+public/*.png
+public/*.jpg
+public/*.jpeg
+public/*.avif
