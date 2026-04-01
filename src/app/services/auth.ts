@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, of, delay } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,6 +11,11 @@ export class Auth {
   private apiUrl = `${environment.apiUrl}/auth`;
 
   login(data: { email: string; password: string }): Observable<any> {
+    // Demo mode for deployment - simulate successful login
+    if (environment.production && (environment as any).demoMode) {
+      return this.demoLogin(data).pipe(delay(1000)); // Simulate API delay
+    }
+    
     return this.http.post<any>(`${this.apiUrl}/login`, data).pipe(
       tap((response) => {
         if (response?.token) {
@@ -19,6 +24,26 @@ export class Auth {
         }
       })
     );
+  }
+
+  private demoLogin(data: { email: string; password: string }): Observable<any> {
+    // Demo credentials - accept any email/password for demo
+    const demoResponse = {
+      success: true,
+      token: 'demo-token-' + Date.now(),
+      user: {
+        id: 1,
+        email: data.email,
+        name: 'Demo User',
+        role: 'admin'
+      }
+    };
+    
+    // Store demo data
+    localStorage.setItem('token', demoResponse.token);
+    localStorage.setItem('user', JSON.stringify(demoResponse.user));
+    
+    return of(demoResponse);
   }
 
   logout(): void {
@@ -74,6 +99,12 @@ export class Auth {
   }
 
   getProfile(): Observable<any> {
+    // Demo mode for deployment - return current user data
+    if (environment.production && (environment as any).demoMode) {
+      const currentUser = this.getUser();
+      return of({ success: true, user: currentUser }).pipe(delay(800));
+    }
+    
     return this.http.get<any>(`${this.apiUrl}/profile`).pipe(
       tap((response) => {
         if (response?.user) {
