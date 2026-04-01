@@ -3,7 +3,7 @@ services:
     name: tvs-bike-crm
     env: static
     buildCommand: npm run build
-    staticPublishPath: ./dist/bikecrm/browser
+    staticPublishPath: dist/TVS-bike-crm/browser
     routes:
       - type: rewrite
         source: /*
