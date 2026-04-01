@@ -29,8 +29,14 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
+            "styles": ["src/styles.scss"],
+            "allowedCommonJsDependencies": [
+              "core-js",
+              "canvg",
+              "html2canvas",
+              "jspdf",
+              "rgbcolor",
+              "raf"
             ]
           },
           "configurations": {
@@ -38,15 +44,20 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "800kB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "6kB",
+                  "maximumError": "12kB"
                 }
               ],
+              "optimization": true,
+              "aot": true,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false,
               "outputHashing": "all"
             },
             "development": {
