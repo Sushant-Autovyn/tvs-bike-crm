@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #1e293b;
+  background: #111217;
   color: #ffffff;
   min-height: 100vh;
   padding: 20px;
@@ -14,11 +14,12 @@
 }
 
 .card {
-  background: #334155;
-  border: 1px solid #475569;
+  background: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 16px;
   padding: 20px;
   color: #ffffff;
+  backdrop-filter: blur(10px);
 }
 
 .form-card {
@@ -37,8 +38,8 @@ select,
 input {
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #475569;
-  background: #1e293b;
+  border: 1px solid #333333;
+  background: #1a1a1a;
   color: #ffffff;
 
   &::placeholder {
@@ -47,13 +48,13 @@ input {
 
   &:focus {
     outline: none;
-    border-color: #22c55e;
+    border-color: #e53935;
   }
 }
 
 .primary-btn {
   margin-top: 10px;
-  background: #22c55e;
+  background: #e53935;
   color: #fff;
   border: none;
   padding: 10px;
@@ -62,7 +63,7 @@ input {
   transition: all 0.2s ease;
 
   &:hover {
-    background: #16a34a;
+    background: #b71c1c;
     transform: translateY(-1px);
   }
 }
@@ -71,7 +72,7 @@ input {
   margin-top: 10px;
   font-size: 16px;
   padding: 15px;
-  background: #22c55e;
+  background: #e53935;
   color: #ffffff;
   border-radius: 10px;
   font-weight: 600;
@@ -81,7 +82,8 @@ input {
 table {
   width: 100%;
   border-collapse: collapse;
-  background: #334155;
+  background: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -89,12 +91,13 @@ table {
 th,
 td {
   padding: 10px;
-  border-bottom: 1px solid #475569;
+  border-bottom: 1px solid #333333;
   color: #ffffff;
 }
 
 th {
-  background: #1e293b;
+  background: #111217;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -119,11 +122,11 @@ th {
 }
 
 .success {
-  color: #10b981;
-  background: #064e3b;
+  color: #e53935;
+  background: #e53935;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #059669;
+  border: 1px solid #b71c1c;
 }
 
 .sales-input-group {

@@ -1,5 +1,5 @@
 .notifications-page {
-  background: #1e293b;
+  background: #111217;
   color: #ffffff;
   min-height: 100vh;
   padding: 20px;
@@ -12,15 +12,16 @@
 }
 
 .notification-item {
-  border: 1px solid #475569;
+  border: 1px solid #333333;
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 10px;
-  background: #334155;
+  background: #1a1a1a;
   color: #ffffff;
+  backdrop-filter: blur(10px);
 }
 
 .notification-item.read {
   opacity: 0.6;
-  background: #1e293b;
+  background: #1a1a1a;
 }

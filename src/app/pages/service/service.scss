@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #1e293b;
+  background: #111217;
   color: #ffffff;
   min-height: 100vh;
   padding: 20px;
@@ -15,12 +15,13 @@
 }
 
 .card {
-  background: #334155;
-  border: 1px solid #475569;
+  background: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 16px;
   padding: 20px;
   color: #ffffff;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(17, 18, 23, 0.3);
 }
 
 /* Form section */
@@ -35,8 +36,8 @@ input {
   width: 100%;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #475569;
-  background: #1e293b;
+  border: 1px solid #333333;
+  background: #1a1a1a;
   color: #ffffff;
   font-size: 14px;
   transition: 0.2s;
@@ -49,7 +50,7 @@ input {
 select:focus,
 input:focus {
   outline: none;
-  border-color: #22c55e;
+  border-color: #e53935;
 }
 
 /* Form layout */
@@ -60,7 +61,7 @@ input:focus {
 
 /* Button */
 button {
-  background: #22c55e;
+  background: #e53935;
   color: #fff;
   border: none;
   padding: 10px 14px;
@@ -69,18 +70,18 @@ button {
   transition: all 0.2s ease;
 
   &:hover {
-    background: #16a34a;
+    background: #b71c1c;
     transform: translateY(-1px);
   }
 }
 
 /* Service list */
 .service-item {
-  border: 1px solid #475569;
+  border: 1px solid #111217;
   border-radius: 12px;
   padding: 14px;
   margin-bottom: 10px;
-  background: #1e293b;
+  background: #111217;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -120,11 +121,11 @@ button {
 
 /* Complete button */
 .service-item button:last-of-type {
-  background: #10b981;
+  background: #e53935;
   color: #ffffff;
 
   &:hover {
-    background: #059669;
+    background: #b71c1c;
   }
 }
 

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #1e293b;
+  background: #111217;
   color: #ffffff;
   min-height: 100vh;
   padding: 20px;
@@ -20,8 +20,8 @@
 }
 
 .card {
-  background: #334155;
-  border: 1px solid #475569;
+  background: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 16px;
   padding: 20px;
   color: #ffffff;
@@ -43,8 +43,8 @@ input,
 select {
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid #475569;
-  background: #1e293b;
+  border: 1px solid #333333;
+  background: #1a1a1a;
   color: #ffffff;
   font-size: 14px;
   outline: none;
@@ -54,13 +54,13 @@ select {
   }
 
   &:focus {
-    border-color: #22c55e;
+    border-color: #e53935;
   }
 }
 
 .primary-btn {
   margin-top: 8px;
-  background: #22c55e;
+  background: #e53935;
   color: #ffffff;
   border: none;
   padding: 11px 14px;
@@ -69,21 +69,21 @@ select {
   width: fit-content;
 
   &:hover {
-    background: #16a34a;
+    background: #b71c1c;
   }
 }
 
 .update-btn {
   margin-left: 8px;
   border: none;
-  background: #16a34a;
+  background: #b71c1c;
   color: #ffffff;
   border-radius: 8px;
   padding: 7px 10px;
   cursor: pointer;
 
   &:hover {
-    background: #15803d;
+    background: #e53935;
   }
 }
 
@@ -103,7 +103,7 @@ select {
 table {
   width: 100%;
   border-collapse: collapse;
-  background: #334155;
+  background: #111217;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -111,13 +111,13 @@ table {
 th,
 td {
   padding: 12px 10px;
-  border-bottom: 1px solid #475569;
+  border-bottom: 1px solid #111217;
   text-align: left;
   color: #ffffff;
 }
 
 th {
-  background: #1e293b;
+  background: #111217;
   font-weight: 600;
 }
 

@@ -6,14 +6,14 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #1e293b;
+  background: #111217;
   color: #ffffff;
 }
 
 .app-layout {
   display: flex;
   min-height: 100vh;
-  background: #1e293b;
+  background: #111217;
 }
 
 .main-area {
@@ -27,5 +27,5 @@ body {
   flex: 1;
   padding: 24px;
   overflow-y: auto;
-  background: #1e293b;
+  background: #111217;
 }

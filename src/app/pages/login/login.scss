@@ -1,11 +1,11 @@
 // Variables
-$bg-dark: #121418;
-$card-bg: #1c1f26;
+$bg-dark: #111217;
+$card-bg: #111217;
 $tvs-red: #e31837;
-$action-blue: #22c55e;
+$action-blue: #e53935;
 $text-main: #ffffff;
 $text-muted: #94a3b8;
-$input-bg: #16191e;
+$input-bg: #111217;
 
 .login-page {
   min-height: 100vh;
@@ -13,7 +13,7 @@ $input-bg: #16191e;
   align-items: center !important;
   justify-content: center !important;
   // Gradient background to mimic the "amazing colors" requirement
-  background: radial-gradient(circle at 50% 50%, #1e2129 0%, #0a0b0d 100%);
+  background: radial-gradient(circle at 50% 50%, #111217 0%, #111217 100%);
   font-family: 'Inter', sans-serif;
   color: $text-main;
 }
@@ -34,72 +34,33 @@ $input-bg: #16191e;
 .login-left {
   flex: 1.2;
   position: relative;
-  background: linear-gradient(135deg, #0f1115 0%, #1c0508 100%);
-  padding: 40px;
+  background: #111217;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, $tvs-red, transparent);
-  }
-
-  .brand-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-
-    .tvs-logo-wrapper {
-      background: $tvs-red;
-      padding: 8px;
-      border-radius: 4px;
-      img {
-        height: 24px;
-      }
-    }
-
-    .crm-title {
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-  }
-
-  .brand-description {
-    color: $text-muted;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    max-width: 300px;
-  }
+  align-items: stretch;
+  justify-content: stretch;
 }
 
 .visual-stack {
-  position: relative;
-  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  margin-bottom: 0;
 
-  .bike-hero-image {
-    width: 110%;
-    position: absolute;
-    bottom: -20px;
-    left: -10px;
-    z-index: 2;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-  }
-
-  .glow-effect {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba($tvs-red, 0.2) 0%, transparent 70%);
-    bottom: 20px;
-    left: 20px;
+  .login-gemini-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    padding: 0;
   }
 }
 
@@ -107,7 +68,7 @@ $input-bg: #16191e;
 .login-right {
   flex: 1;
   padding: 60px;
-  background: #1c1f26;
+  background: #111217;
 
   .form-header {
     margin-bottom: 35px;
@@ -198,7 +159,7 @@ $input-bg: #16191e;
     opacity: 0.9;
   }
   &:disabled {
-    background: #334155;
+    background: #111217;
     cursor: not-allowed;
   }
 }
@@ -206,6 +167,6 @@ $input-bg: #16191e;
 .debug-info {
   margin-top: 40px;
   font-size: 0.75rem;
-  color: #334155;
+  color: #111217;
   text-align: center;
 }

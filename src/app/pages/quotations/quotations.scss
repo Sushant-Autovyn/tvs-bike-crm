@@ -16,8 +16,8 @@
 }
 
 .card {
-  background: #334155;
-  border: 1px solid #475569;
+  background: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 16px;
   padding: 20px;
   color: #ffffff;
@@ -45,8 +45,8 @@ select,
 textarea {
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #475569;
-  background: #1e293b;
+  border: 1px solid #333333;
+  background: #1a1a1a;
   color: #ffffff;
 
   &::placeholder {
@@ -55,12 +55,12 @@ textarea {
 
   &:focus {
     outline: none;
-    border-color: #22c55e;
+    border-color: #e53935;
   }
 }
 
 .primary-btn {
-  background: #22c55e;
+  background: #e53935;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -69,7 +69,7 @@ textarea {
   transition: all 0.2s ease;
 
   &:hover {
-    background: #16a34a;
+    background: #b71c1c;
     transform: translateY(-1px);
   }
 }
@@ -85,12 +85,12 @@ input {
 
 select:focus,
 input:focus {
-  border-color: #22c55e;
+  border-color: #e53935;
 }
 
 .primary-btn {
   margin-top: 10px;
-  background: #22c55e;
+  background: #e53935;
   color: #fff;
   border: none;
   padding: 11px 14px;
@@ -99,7 +99,7 @@ input:focus {
   width: fit-content;
 
   &:hover {
-    background: #16a34a;
+    background: #b71c1c;
   }
 }
 
