@@ -80,6 +80,8 @@ export class Sales implements OnInit {
 
     this.salesService.createSale(data).subscribe({
       next: () => {
+        console.log('✅ Sale created successfully');
+        alert('Sale created successfully!');
         this.customerId = '';
         this.bikeId = '';
         this.quantity = 1;
@@ -87,6 +89,7 @@ export class Sales implements OnInit {
         this.loadBikes();
       },
       error: (err) => {
+        console.error('❌ Create sale error:', err);
         alert(err?.error?.message || 'Failed to create sale');
       }
     });

@@ -84,21 +84,42 @@ export class Service implements OnInit {
   }
 
   createService() {
+    if (!this.customerId || !this.bikeId || !this.issue) {
+      alert('Customer, bike, and issue description are required');
+      return;
+    }
+
     this.serviceApi.createService({
       customerId: this.customerId,
       bikeId: this.bikeId,
       issue: this.issue
-    }).subscribe(() => {
-      this.customerId = '';
-      this.bikeId = '';
-      this.issue = '';
-      this.loadData();
+    }).subscribe({
+      next: () => {
+        console.log('✅ Service request created successfully');
+        alert('Service request created successfully!');
+        this.customerId = '';
+        this.bikeId = '';
+        this.issue = '';
+        this.loadData();
+      },
+      error: (err) => {
+        console.error('❌ Create service error:', err);
+        alert(err?.error?.message || 'Failed to create service request');
+      }
     });
   }
 
   updateStatus(id: string, status: string) {
-    this.serviceApi.updateStatus(id, status).subscribe(() => {
-      this.loadData();
+    this.serviceApi.updateStatus(id, status).subscribe({
+      next: () => {
+        console.log('✅ Service status updated successfully');
+        alert('Service status updated successfully!');
+        this.loadData();
+      },
+      error: (err) => {
+        console.error('❌ Update service status error:', err);
+        alert(err?.error?.message || 'Failed to update service status');
+      }
     });
   }
 }

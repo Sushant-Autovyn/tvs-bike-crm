@@ -125,10 +125,13 @@ export class Payments {
 
     this.paymentService.createPayment(data).subscribe({
       next: () => {
+        console.log('✅ Payment created successfully');
+        alert('Payment recorded successfully!');
         this.resetForm();
         this.loadPayments();
       },
       error: (err) => {
+        console.error('❌ Create payment error:', err);
         alert(err?.error?.message || 'Failed to create payment');
       }
     });

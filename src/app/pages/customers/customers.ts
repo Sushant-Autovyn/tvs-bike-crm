@@ -60,6 +60,8 @@ export class Customers implements OnInit {
       return;
     }
 
+    console.log('Adding customer...', { name: this.name, phone: this.phone });
+
     const data = {
       name: this.name,
       phone: this.phone,
@@ -68,9 +70,16 @@ export class Customers implements OnInit {
     };
 
     this.customerService.createCustomer(data).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('Customer added successfully:', response);
+        alert('Customer added successfully!');
         this.resetForm();
         this.loadCustomers();
+      },
+      error: (error) => {
+        console.error('Add customer error:', error);
+        const errorMsg = error?.error?.message || 'Failed to add customer';
+        alert('Error adding customer: ' + errorMsg);
       }
     });
   }

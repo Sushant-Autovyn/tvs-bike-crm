@@ -82,12 +82,15 @@ export class Quotations {
 
     this.quotationService.createQuotation(data).subscribe({
       next: () => {
+        console.log('✅ Quotation created successfully');
+        alert('Quotation generated successfully!');
         this.customerId = '';
         this.bikeId = '';
         this.quantity = 1;
         this.loadQuotations();
       },
       error: (err) => {
+        console.error('❌ Create quotation error:', err);
         alert(err?.error?.message || 'Failed to create quotation');
       }
     });
