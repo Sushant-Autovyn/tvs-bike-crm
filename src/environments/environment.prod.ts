@@ -3,5 +3,5 @@ export const environment = {
   apiUrl: 'https://tvs-bike-crm.onrender.com/api', // Correct deployed backend URL
   appName: 'Bike CRM',
   version: '1.0.0',
-  demoMode: false // Disable demo mode - use real backend
+  demoMode: true // Enable demo mode temporarily until auth is fixed
 };
