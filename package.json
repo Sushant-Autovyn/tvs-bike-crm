@@ -2,10 +2,10 @@
   "name": "bikecrm",
   "version": "1.0.0",
   "description": "Bike CRM - Full Stack Application",
-  "main": "backend/server.js",
+  "main": "server.js",
   "scripts": {
     "ng": "ng",
-    "start": "cd backend && node server.js",
+    "start": "node server.js",
     "start:frontend": "ng serve",
     "build": "npm install && npx ng build --configuration production",
     "build:frontend": "npx ng build --configuration production",
