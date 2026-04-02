@@ -11,19 +11,7 @@ export class Auth {
   private apiUrl = `${environment.apiUrl}/auth`;
 
   login(data: { email: string; password: string }): Observable<any> {
-    console.log('Environment:', environment);
-    console.log('Production:', environment.production);
-    console.log('DemoMode:', (environment as any).demoMode);
-    
-    // Demo mode - check if demo mode is enabled (regardless of production/dev)
-    const isDemoMode = (environment as any).demoMode === true;
-    
-    if (isDemoMode) {
-      console.log('Demo mode enabled - using mock authentication');
-      return this.demoLogin(data);
-    }
-    
-    console.log('Regular mode - attempting HTTP request to:', this.apiUrl);
+    console.log('Attempting login to:', this.apiUrl);
     return this.http.post<any>(`${this.apiUrl}/login`, data).pipe(
       tap((response) => {
         console.log('Auth response:', response);
@@ -114,12 +102,6 @@ export class Auth {
   }
 
   getProfile(): Observable<any> {
-    // Demo mode - return current user data if demo mode is enabled
-    if ((environment as any).demoMode === true) {
-      const currentUser = this.getUser();
-      return of({ success: true, user: currentUser }).pipe(delay(800));
-    }
-    
     return this.http.get<any>(`${this.apiUrl}/profile`).pipe(
       tap((response) => {
         if (response?.user) {
