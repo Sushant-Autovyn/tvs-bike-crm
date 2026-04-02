@@ -13,7 +13,7 @@ connectDB();
 // Enhanced CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-production-domain.com'] // Update this for production
+    ? ['https://tvs-bike-crm.onrender.com'] // Allow production domain
     : ['http://localhost:4200', 'http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200
