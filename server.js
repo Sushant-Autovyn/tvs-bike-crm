@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const connectDB = require('./backend/config/db');
 
 dotenv.config();
@@ -30,9 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.send('Bike CRM API is running');
-});
+// Serve Angular static files
+app.use(express.static(path.join(__dirname, 'dist/TVS-bike-crm/browser')));
 
 // Database info endpoint  
 app.get('/api/db-info', (req, res) => {
