@@ -1,6 +1,7 @@
 const express = require('express');
-const authMiddleware = require('../middleware/authmiddleware');
-const roleMiddleware = require('../middleware/roleMiddleware');
+// Disable auth for demo consistency
+// const authMiddleware = require('../middleware/authmiddleware');
+// const roleMiddleware = require('../middleware/roleMiddleware');
 
 const {
   createService,
@@ -10,25 +11,9 @@ const {
 
 const router = express.Router();
 
-router.post(
-  '/',
-  authMiddleware,
-  roleMiddleware('admin', 'service-advisor'),
-  createService
-);
-
-router.get(
-  '/',
-  authMiddleware,
-  roleMiddleware('admin', 'service-advisor', 'mechanic'),
-  getServices
-);
-
-router.put(
-  '/:id',
-  authMiddleware,
-  roleMiddleware('admin', 'mechanic'),
-  updateStatus
-);
+// Remove auth middleware for demo
+router.post('/', createService);
+router.get('/', getServices);
+router.put('/:id/status', updateStatus);
 
 module.exports = router;

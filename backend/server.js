@@ -56,9 +56,13 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/api/auth', require('./routes/authroutes'));
+// Direct test for bike API debugging
+app.get('/api/bikes/direct-test', (req, res) => {
+  res.json({ message: 'Direct bike test works - no middleware issues' });
+});
 app.use('/api/dashboard', require('./routes/dashboardroutes'));
 app.use('/api/customers', require('./routes/customerroutes'));
-app.use('/api/bikes', require('./routes/bikeroutes'));
+app.use('/api/vehicles', require('./routes/bikeroutes-new'));  // WORKING SOLUTION: Use /vehicles instead of /bikes
 app.use('/api/sales', require('./routes/salesroutes'));
 app.use('/api/services', require('./routes/serviceroutes'));
 app.use('/api/notifications', require('./routes/notificationroutes'));

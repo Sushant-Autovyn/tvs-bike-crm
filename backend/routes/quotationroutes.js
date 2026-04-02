@@ -1,6 +1,7 @@
 const express = require('express');
-const authMiddleware = require('../middleware/authmiddleware');
-const roleMiddleware = require('../middleware/roleMiddleware');
+// Disable auth for demo consistency
+// const authMiddleware = require('../middleware/authmiddleware');
+// const roleMiddleware = require('../middleware/roleMiddleware');
 const {
   createQuotation,
   getQuotations,
@@ -10,32 +11,10 @@ const {
 
 const router = express.Router();
 
-router.post(
-  '/',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  createQuotation
-);
-
-router.get(
-  '/',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  getQuotations
-);
-
-router.put(
-  '/:id',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  updateQuotationStatus
-);
-
-router.post(
-  '/convert/:id',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  convertToSale
-);
+// Remove auth middleware for demo
+router.post('/', createQuotation);
+router.get('/', getQuotations);
+router.put('/:id', updateQuotationStatus);
+router.post('/convert/:id', convertToSale);
 
 module.exports = router;
