@@ -26,6 +26,8 @@ export class Login {
     }
 
     console.log('Login attempt started');
+    console.log('Email:', this.email);
+    console.log('Password length:', this.password.length);
     this.errorMsg = '';
     this.isLoading = true;
 
@@ -36,12 +38,16 @@ export class Login {
       next: (response) => {
         console.log('Login successful:', response);
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        console.log('Navigating to dashboard...');
+        this.router.navigate(['/dashboard']).then(
+          (success) => console.log('Navigation result:', success),
+          (error) => console.error('Navigation error:', error)
+        );
       },
       error: (error: any) => {
         console.error('Login error:', error);
         this.isLoading = false;
-        this.errorMsg = error?.error?.message || 'Login failed';
+        this.errorMsg = error?.error?.message || error?.message || 'Login failed. Please try again.';
       },
       complete: () => {
         console.log('Login observable completed');

@@ -57,7 +57,8 @@ export class Auth {
     
     console.log('Demo data stored in localStorage');
     
-    return of(demoResponse);
+    // Return observable with small delay to simulate network request
+    return of(demoResponse).pipe(delay(500));
   }
 
   logout(): void {
