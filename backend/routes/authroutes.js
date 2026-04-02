@@ -41,8 +41,28 @@ router.get('/jwt-test', (req, res) => {
   }
 });
 
+// Simple test login endpoint
+router.post('/test-login', (req, res) => {
+  console.log('🧪 TEST LOGIN ENDPOINT HIT!');
+  try {
+    const testToken = 'test-token-12345';
+    res.json({
+      message: 'Test login successful',
+      token: testToken,
+      user: { id: 1, email: 'test@test.com', role: 'admin' }
+    });
+  } catch (error) {
+    console.error('❌ Test login error:', error.message);
+    res.status(500).json({ message: 'Test login failed', error: error.message });
+  }
+});
+
 router.post('/register', registerUser);
-router.post('/login', loginUser);
+router.post('/login', (req, res, next) => {
+  console.log('🔥 LOGIN ROUTE HIT!');
+  console.log('🔥 Request body:', req.body);
+  loginUser(req, res, next);
+});
 router.get('/profile', authMiddleware, getProfile);
 
 module.exports = router;
