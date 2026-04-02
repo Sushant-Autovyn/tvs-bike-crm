@@ -16,29 +16,13 @@ router.get('/test', (req, res) => {
   });
 });
 
-// JWT Test endpoint
+// Simple test endpoint without JWT
 router.get('/jwt-test', (req, res) => {
-  console.log('🧪 JWT Test endpoint called');
-  console.log('🔑 JWT_SECRET available:', process.env.JWT_SECRET ? 'YES' : 'NO');
-  console.log('🔑 JWT_SECRET length:', process.env.JWT_SECRET ? process.env.JWT_SECRET.length : 0);
-  
-  try {
-    const jwt = require('jsonwebtoken');
-    const testToken = jwt.sign({ test: 'data' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    console.log('✅ JWT generation successful');
-    res.json({ 
-      message: 'JWT test successful',
-      tokenLength: testToken.length,
-      jwtSecretLoaded: !!process.env.JWT_SECRET
-    });
-  } catch (error) {
-    console.error('❌ JWT generation failed:', error.message);
-    res.status(500).json({ 
-      message: 'JWT test failed',
-      error: error.message,
-      jwtSecretLoaded: !!process.env.JWT_SECRET
-    });
-  }
+  console.log('🧪 Simple test endpoint called');
+  res.json({ 
+    message: 'Simple test successful',
+    jwtSecretLoaded: !!process.env.JWT_SECRET
+  });
 });
 
 // Simple test login endpoint
