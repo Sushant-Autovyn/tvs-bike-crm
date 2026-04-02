@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Debug - Angular Issue</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; cursor: pointer; }
+        .results { margin-top: 10px; padding: 10px; background: #f8f9fa; border-left: 3px solid #007bff; }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+    </style>
+</head>
+<body>
+    <h1>🐛 API Debug - Angular vs Direct Test</h1>
+    <p><strong>Issue:</strong> Angular getting "Failed to add customer/bike" but backend APIs work</p>
+    
+    <div class="test-section">
+        <h2>Test 1: Direct API Call (Bypass Angular)</h2>
+        <button onclick="testDirectCustomer()">Add Customer Directly</button>
+        <button onclick="testDirectBike()">Add Bike Directly (via customers)</button>
+        <div id="directResults" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Angular Style Call (Same Origin)</h2>
+        <button onclick="testAngularStyle()">Test Angular-Style Request</button>
+        <div id="angularResults" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Token Check</h2>
+        <button onclick="checkToken()">Check Auth Token</button>
+        <button onclick="testWithToken()">Test with Token</button>
+        <div id="tokenResults" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Solution Steps</h2>
+        <ol>
+            <li><strong>Open Angular App:</strong> <a href="http://localhost:4200" target="_blank">http://localhost:4200</a></li>
+            <li><strong>Login:</strong> Use any email/password (demo system)</li>
+            <li><strong>Check Browser Console:</strong> F12 → Console tab for errors</li>
+            <li><strong>Check Network Tab:</strong> F12 → Network tab to see failed requests</li>
+        </ol>
+    </div>
+
+    <script>
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const className = type === 'error' ? 'results error' : type === 'success' ? 'results success' : 'results';
+            element.className = className;
+            element.innerHTML = `<p><strong>Result:</strong> ${message}</p>`;
+        }
+        
+        async function testDirectCustomer() {
+            log('directResults', 'Testing direct customer creation...', 'info');
+            try {
+                const response = await fetch('http://localhost:3000/api/customers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: 'Direct Test Customer',
+                        phone: '9999999999',
+                        email: 'direct@test.com',
+                        city: 'Direct City'
+                    })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    log('directResults', `✅ Direct Customer SUCCESS!<br>Status: ${response.status}<br>Customer: ${data.customer.name}<br>ID: ${data.customer._id}`, 'success');
+                } else {
+                    log('directResults', `❌ Direct Customer Error: ${response.status} - ${data.message}`, 'error');
+                }
+            } catch (error) {
+                log('directResults', `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testDirectBike() {
+            log('directResults', 'Testing direct bike creation (via customers)...', 'info');
+            try {
+                const response = await fetch('http://localhost:3000/api/customers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: 'Honda CBR 150R Direct',
+                        phone: '150000',
+                        email: 'direct@bikes.com',
+                        city: 'Sport'
+                    })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    log('directResults', `✅ Direct Bike SUCCESS!<br>Status: ${response.status}<br>Bike: ${data.customer.name}<br>Price: ${data.customer.phone}`, 'success');
+                } else {
+                    log('directResults', `❌ Direct Bike Error: ${response.status} - ${data.message}`, 'error');
+                }
+            } catch (error) {
+                log('directResults', `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testAngularStyle() {
+            log('angularResults', 'Testing Angular-style request with CORS headers...', 'info');
+            try {
+                const response = await fetch('http://localhost:3000/api/customers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': 'http://localhost:4200'
+                    },
+                    body: JSON.stringify({
+                        name: 'Angular Style Test',
+                        phone: '5555555555',
+                        email: 'angular@test.com',
+                        city: 'Angular City'
+                    })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    log('angularResults', `✅ Angular-style SUCCESS!<br>This means CORS is working<br>Status: ${response.status}`, 'success');
+                } else {
+                    log('angularResults', `❌ Angular-style Error: ${response.status} - ${data.message}`, 'error');
+                }
+            } catch (error) {
+                log('angularResults', `❌ CORS/Network Error: ${error.message}<br>This might be the issue!`, 'error');
+            }
+        }
+        
+        function checkToken() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (token) {
+                log('tokenResults', `✅ Token Found: ${token.substring(0, 30)}...<br>User: ${user}`, 'success');
+            } else {
+                log('tokenResults', `❌ No Token Found!<br>You need to login first at <a href="http://localhost:4200" target="_blank">Angular App</a>`, 'error');
+            }
+        }
+        
+        async function testWithToken() {
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                log('tokenResults', '❌ No token found. Please login first.', 'error');
+                return;
+            }
+            
+            log('tokenResults', 'Testing with auth token...', 'info');
+            try {
+                const response = await fetch('http://localhost:3000/api/customers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'Origin': 'http://localhost:4200'
+                    },
+                    body: JSON.stringify({
+                        name: 'Token Test Customer',
+                        phone: '7777777777',
+                        email: 'token@test.com',
+                        city: 'Token City'
+                    })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    log('tokenResults', `✅ Token Request SUCCESS!<br>Angular auth should work<br>Status: ${response.status}`, 'success');
+                } else {
+                    log('tokenResults', `❌ Token Request Failed: ${response.status} - ${data.message}`, 'error');
+                }
+            } catch (error) {
+                log('tokenResults', `❌ Token Request Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Auto-check token on load
+        window.addEventListener('load', function() {
+            checkToken();
+        });
+    </script>
+</body>
+</html>

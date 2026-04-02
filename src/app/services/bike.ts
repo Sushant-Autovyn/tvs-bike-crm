@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 })
 export class BikeService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/bikes`;
+  private apiUrl = `${environment.apiUrl}/vehicles`;  // Fixed: Use proper vehicles endpoint
 
   getBikes() {
     return this.http.get<any>(this.apiUrl);

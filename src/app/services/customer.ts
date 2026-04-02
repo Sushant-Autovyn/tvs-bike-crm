@@ -13,8 +13,8 @@ interface Customer {
 }
 
 interface CustomerResponse {
+  message: string;
   customers: Customer[];
-  total: number;
 }
 
 @Injectable({
@@ -28,8 +28,8 @@ export class CustomerService {
     return this.http.get<CustomerResponse>(this.apiUrl);
   }
 
-  createCustomer(customer: Omit<Customer, '_id' | 'createdAt'>): Observable<{ customer: Customer }> {
-    return this.http.post<{ customer: Customer }>(this.apiUrl, customer);
+  createCustomer(customer: Omit<Customer, '_id' | 'createdAt'>): Observable<{ message: string; customer: Customer }> {
+    return this.http.post<{ message: string; customer: Customer }>(this.apiUrl, customer);
   }
 
   deleteCustomer(id: string): Observable<{ message: string }> {

@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupplierService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/suppliers';
+  private apiUrl = `${environment.apiUrl}/suppliers`;
 
   getSuppliers() {
     return this.http.get<any>(this.apiUrl);
