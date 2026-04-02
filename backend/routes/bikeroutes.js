@@ -12,39 +12,11 @@ const {
 
 const router = express.Router();
 
-router.post(
-  '/',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  createBike
-);
-
-router.get(
-  '/',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  getBikes
-);
-
-router.get(
-  '/:id',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  getBikeById
-);
-
-router.put(
-  '/:id',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  updateBike
-);
-
-router.delete(
-  '/:id',
-  authMiddleware,
-  roleMiddleware('admin', 'sales-executive'),
-  deleteBike
-);
+// Restore auth middleware with demo token support
+router.post('/', authMiddleware, roleMiddleware('admin', 'sales-executive'), createBike);
+router.get('/', authMiddleware, roleMiddleware('admin', 'sales-executive'), getBikes);
+router.get('/:id', authMiddleware, roleMiddleware('admin', 'sales-executive'), getBikeById);
+router.put('/:id', authMiddleware, roleMiddleware('admin', 'sales-executive'), updateBike);
+router.delete('/:id', authMiddleware, roleMiddleware('admin', 'sales-executive'), deleteBike);
 
 module.exports = router;
