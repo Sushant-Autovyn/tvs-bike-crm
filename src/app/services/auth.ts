@@ -15,8 +15,8 @@ export class Auth {
     console.log('Production:', environment.production);
     console.log('DemoMode:', (environment as any).demoMode);
     
-    // Demo mode for deployment - simulate successful login
-    const isDemoMode = environment.production && (environment as any).demoMode;
+    // Demo mode - check if demo mode is enabled (regardless of production/dev)
+    const isDemoMode = (environment as any).demoMode === true;
     
     if (isDemoMode) {
       console.log('Demo mode enabled - using mock authentication');
@@ -114,8 +114,8 @@ export class Auth {
   }
 
   getProfile(): Observable<any> {
-    // Demo mode for deployment - return current user data
-    if (environment.production && (environment as any).demoMode) {
+    // Demo mode - return current user data if demo mode is enabled
+    if ((environment as any).demoMode === true) {
       const currentUser = this.getUser();
       return of({ success: true, user: currentUser }).pipe(delay(800));
     }
