@@ -2,39 +2,33 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    // Production vs Development environment handling
     const isProduction = process.env.NODE_ENV === 'production';
     
     let MONGO_URI;
     
     if (isProduction) {
-      // Production: Only use Atlas, no fallback
       MONGO_URI = process.env.MONGO_URI;
       if (!MONGO_URI) {
         throw new Error('MONGO_URI environment variable is required in production');
       }
       console.log('🚀 Production Mode: Connecting to MongoDB Atlas');
     } else {
-      // Development: Try Atlas first, then local fallback
       MONGO_URI = process.env.MONGO_URI || process.env.MONGO_URI_LOCAL || 'mongodb://127.0.0.1:27017/bikecrm_local';
       console.log('🔧 Development Mode: Connecting to MongoDB...');
     }
     
     console.log(`📡 Target: ${MONGO_URI.includes('mongodb.net') ? 'MongoDB Atlas (Cloud)' : 'Local MongoDB'}`);
-    console.log(`🔗 Connection URI: ${MONGO_URI.replace(/\/\/.*@/, '//***:***@')}`); // Hide credentials
+    console.log(`🔗 Connection URI: ${MONGO_URI.replace(/\/\/.*@/, '//***:***@')}`);
 
-    // Enhanced connection options for better Atlas compatibility
+    // Mongoose connection options
     const connectionOptions = {
-      serverSelectionTimeoutMS: isProduction ? 15000 : 5000, // Longer timeout in production
+      serverSelectionTimeoutMS: 20000,
       socketTimeoutMS: 45000,
-      maxPoolSize: 10,
-      minPoolSize: 2,
-      maxIdleTimeMS: 30000,
-      connectTimeoutMS: 10000
+      connectTimeoutMS: 20000
     };
 
     if (isProduction) {
-      // Production: Direct connect, no fallback
+      // Production: Direct connect
       await mongoose.connect(MONGO_URI, connectionOptions);
       console.log('✅ MongoDB Atlas connected successfully (Production)');
     } else {

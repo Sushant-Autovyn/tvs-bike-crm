@@ -34,6 +34,18 @@ app.get('/', (req, res) => {
   res.send('Bike CRM API is running');
 });
 
+// Database info endpoint  
+app.get('/api/db-info', (req, res) => {
+  const dbName = mongoose.connection.name;
+  const readyState = mongoose.connection.readyState;
+  res.json({
+    database: dbName,
+    connectionState: readyState, // 1 = connected
+    host: mongoose.connection.host,
+    collections: Object.keys(mongoose.connection.collections)
+  });
+});
+
 // Simple test endpoint
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working', timestamp: new Date() });

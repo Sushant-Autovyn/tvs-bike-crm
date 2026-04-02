@@ -1,30 +1,182 @@
-# Bikecrm
+# Bike CRM - Full Stack Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+A comprehensive Customer Relationship Management system for bike dealerships, built with Angular frontend and Node.js/Express backend with MongoDB Atlas database.
 
-## Development server
+## 🚀 Features
 
-To start a local development server, run:
+- **Customer Management**: Create, read, update, and delete customer records
+- **Bike Inventory**: Manage bike catalog and inventory
+- **Sales Tracking**: Track sales and quotations
+- **Service Management**: Manage bike servicing and repairs
+- **Staff Management**: Handle staff and user roles
+- **Cloud Database**: MongoDB Atlas integration for data persistence
+
+## 🏗️ Tech Stack
+
+**Frontend:**
+
+- Angular 21.1.4
+- TypeScript
+- SCSS
+
+**Backend:**
+
+- Node.js
+- Express.js
+- Mongoose ODM
+- MongoDB Atlas
+
+## 📋 Prerequisites
+
+- Node.js (v18 or higher)
+- npm
+- MongoDB Atlas account
+- Angular CLI
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-github-repo-url>
+cd bikecrm
+```
+
+### 2. Install Dependencies
+
+**Frontend:**
+
+```bash
+npm install
+```
+
+**Backend:**
+
+```bash
+cd backend
+npm install
+```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the `backend` folder:
+
+```env
+PORT=3000
+MONGO_URI=your_mongodb_atlas_connection_string
+MONGO_URI_LOCAL=mongodb://127.0.0.1:27017/bikecrm_local
+JWT_SECRET=your_jwt_secret_key
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:4200
+```
+
+**⚠️ Important:** Replace `your_mongodb_atlas_connection_string` with your actual MongoDB Atlas connection string.
+
+### 4. MongoDB Atlas Setup
+
+1. Create a MongoDB Atlas account
+2. Create a new cluster
+3. Add your IP to Network Access
+4. Create a database user
+5. Get your connection string and add it to `.env`
+
+## 🚦 Running the Application
+
+### Development Mode
+
+**Start Backend Server:**
+
+```bash
+cd backend
+npm run dev
+```
+
+Server runs on `http://localhost:3000`
+
+**Start Frontend (in another terminal):**
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Application runs on `http://localhost:4200`
 
-## Code scaffolding
+## 📡 API Endpoints
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Customers
 
-```bash
-ng generate component component-name
+- `GET /api/customers` - Get all customers
+- `POST /api/customers` - Create new customer
+- `GET /api/customers/:id` - Get customer by ID
+- `PUT /api/customers/:id` - Update customer
+- `DELETE /api/customers/:id` - Delete customer
+
+### Other Endpoints
+
+- `GET /api/test` - Test API connectivity
+- `GET /api/db-info` - Database connection info
+
+## 🧪 Testing with Postman
+
+Import the collection and test endpoints:
+
+```json
+{
+  "name": "John Doe",
+  "phone": "1234567890",
+  "email": "john@example.com",
+  "address": "123 Main St",
+  "city": "Mumbai",
+  "notes": "Test customer"
+}
 ```
+
+## 🌍 Deployment
+
+The application is configured for deployment on:
+
+- **Frontend**: Vercel/Netlify
+- **Backend**: Render/Railway
+- **Database**: MongoDB Atlas (Production)
+
+## 📁 Project Structure
+
+```
+bikecrm/
+├── src/                    # Angular frontend
+├── backend/               # Node.js backend
+│   ├── config/           # Database configuration
+│   ├── controllers/      # Route controllers
+│   ├── models/          # Mongoose models
+│   ├── routes/          # API routes
+│   └── server.js        # Server entry point
+├── .env.example         # Environment template
+└── README.md
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 📞 Support
+
+For support, email [your-email] or create an issue in this repository.
+
+````
 
 For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
 ```bash
 ng generate --help
-```
+````
 
 ## Building
 
