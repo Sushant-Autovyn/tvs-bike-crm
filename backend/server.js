@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -15,7 +17,7 @@ connectDB();
 // Enhanced CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-production-domain.com'] // Update this for production
+    ? ['https://tvs-bike-crm.onrender.com', 'https://your-production-domain.com'] // Production domains
     : ['http://localhost:4200', 'http://localhost:4201', 'http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200
@@ -33,9 +35,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.send('Bike CRM API is running');
-});
+// Serve static files from Angular build
+app.use(express.static(path.join(__dirname, '..', 'dist', 'bikecrm', 'browser')));
 
 // Database info endpoint  
 app.get('/api/db-info', (req, res) => {
@@ -67,6 +68,17 @@ app.use('/api/leads', require('./routes/leadroutes'));
 app.use('/api/payments', require('./routes/paymentroutes'));
 app.use('/api/staff', require('./routes/staffroutes'));
 app.use('/api/suppliers', require('./routes/supplierroutes'));
+
+// Catch-all handler: send back Angular's index.html file for client-side routing
+// This should come AFTER all API routes
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'bikecrm', 'browser', 'index.html'));
+});
+
+// Handle Angular routes (anything that's not an API route)
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'bikecrm', 'browser', 'index.html'));
+});
 
 const PORT = process.env.PORT || 3000;
 
