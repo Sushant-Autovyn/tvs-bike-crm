@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from Angular build
-app.use(express.static(path.join(__dirname, '..', 'dist', 'TVS-bike-crm')));
+app.use(express.static(path.join(__dirname, '..', 'dist', 'TVS-bike-crm', 'browser')));
 
 // Database info endpoint  
 app.get('/api/db-info', (req, res) => {
@@ -72,12 +72,12 @@ app.use('/api/suppliers', require('./routes/supplierroutes'));
 // Catch-all handler: send back Angular's index.html file for client-side routing
 // This should come AFTER all API routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'TVS-bike-crm', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'dist', 'TVS-bike-crm', 'browser', 'index.html'));
 });
 
 // Handle Angular routes (anything that's not an API route)
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'TVS-bike-crm', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'dist', 'TVS-bike-crm', 'browser', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
