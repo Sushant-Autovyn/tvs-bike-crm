@@ -5,6 +5,9 @@ const connectDB = require('./config/db');
 
 dotenv.config();
 
+console.log('🔑 JWT_SECRET loaded:', process.env.JWT_SECRET ? 'YES' : 'NO');
+console.log('🔑 JWT_SECRET value:', process.env.JWT_SECRET ? 'HIDDEN' : 'UNDEFINED');
+
 const app = express();
 
 connectDB();
@@ -13,7 +16,7 @@ connectDB();
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://your-production-domain.com'] // Update this for production
-    : ['http://localhost:4200', 'http://localhost:3000'],
+    : ['http://localhost:4200', 'http://localhost:4201', 'http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200
 };

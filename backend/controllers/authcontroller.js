@@ -3,13 +3,18 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const generateToken = (user) => {
+  console.log('🔑 Generating token for user:', user.email);
+  
+  // Direct hardcoded secret to test
+  const jwtSecret = 'your_super_secret_key_123';
+  
   return jwt.sign(
     {
       userId: user._id,
       email: user.email,
       role: user.role
     },
-    process.env.JWT_SECRET,
+    jwtSecret,
     { expiresIn: '7d' }
   );
 };
@@ -61,31 +66,42 @@ const registerUser = async (req, res) => {
 // LOGIN
 const loginUser = async (req, res) => {
   try {
+    console.log('📝 Login attempt received:', { email: req.body.email, passwordLength: req.body.password?.length });
+    
     const { email, password } = req.body;
 
     if (!email || !password) {
+      console.log('❌ Missing credentials');
       return res.status(400).json({
         message: 'Email and password are required'
       });
     }
 
+    console.log('🔍 Looking for user with email:', email);
     const user = await User.findOne({ email });
+    console.log('👤 User found:', user ? 'YES' : 'NO');
 
     if (!user) {
+      console.log('❌ User not found');
       return res.status(400).json({
         message: 'Invalid email or password'
       });
     }
 
+    console.log('🔐 Comparing passwords...');
     const isPasswordMatch = await bcrypt.compare(password, user.password);
+    console.log('🔐 Password match:', isPasswordMatch ? 'YES' : 'NO');
 
     if (!isPasswordMatch) {
+      console.log('❌ Password mismatch');
       return res.status(400).json({
         message: 'Invalid email or password'
       });
     }
 
+    console.log('✅ Authentication successful, generating token...');
     const token = generateToken(user);
+    console.log('🎫 Token generated successfully');
 
     res.status(200).json({
       message: 'Login successful',
@@ -98,6 +114,7 @@ const loginUser = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('💥 Login error:', error.message);
     res.status(500).json({
       message: error.message
     });
