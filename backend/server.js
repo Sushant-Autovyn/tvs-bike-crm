@@ -18,7 +18,7 @@ connectDB();
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://tvs-bike-crm.onrender.com', 'https://your-production-domain.com'] // Production domains
-    : ['http://localhost:4200', 'http://localhost:4201', 'http://localhost:3000'],
+    : ['http://localhost:4200', 'http://localhost:4201', 'http://localhost:3000', 'http://localhost:55870'],
   credentials: true,
   optionsSuccessStatus: 200
 };
