@@ -5,18 +5,30 @@ const User = require('../models/user');
 const generateToken = (user) => {
   console.log('🔑 Generating token for user:', user.email);
   
+  // Debug: Check if jwt is available
+  console.log('JWT library:', typeof jwt);
+  console.log('JWT sign function:', typeof jwt.sign);
+  
   // Direct hardcoded secret to test
   const jwtSecret = 'your_super_secret_key_123';
+  console.log('JWT Secret:', jwtSecret);
   
-  return jwt.sign(
-    {
-      userId: user._id,
-      email: user.email,
-      role: user.role
-    },
-    jwtSecret,
-    { expiresIn: '7d' }
-  );
+  try {
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+        role: user.role
+      },
+      jwtSecret,
+      { expiresIn: '7d' }
+    );
+    console.log('✅ Token generated successfully');
+    return token;
+  } catch (error) {
+    console.error('❌ JWT Error:', error.message);
+    throw error;
+  }
 };
 
 // REGISTER
